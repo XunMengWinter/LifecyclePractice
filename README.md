@@ -1,4 +1,4 @@
-###Lifecycle简介
+### Lifecycle简介
 官方简介如此：
 > Lifecycle-aware components perform actions in response to a change in the lifecycle status of another component, such as activities and fragments. These components help you produce better-organized, and often lighter-weight code, that is easier to maintain.
 
@@ -6,7 +6,7 @@
 
 听起来很强大吧，先来来看看使用效果吧。
 
-###Lifecycle网络回调示例
+### Lifecycle网络回调示例
 常规RxJava&Retrofit网络回调：
 ```
     @Deprecated
@@ -47,7 +47,7 @@
     }
 ```
 可以发现，结合Lifecycle，回调不仅简洁，而且更为安全。Lifecycle可以让开发者更专注地实现功能而非小心翼翼地做生命周期判断。
-###如何实现
+### 如何实现
 首先，我们Lifecycle库引入到项目。在app模块build.gradle文件dependencies内添加以下代码即可：
 ```
     // Java8 support for Lifecycles
@@ -172,7 +172,7 @@ public abstract class SafeObserver<T> implements LifecycleObserver, Observer<T> 
 ```
 好了，大功告成！这样一来，订阅该lifecycle的观察者(比如前面的SafeObserver)就能接收到该lifecycle对应Activity(或Fragment)生命周期的回调了。
 
-###相关资料
+### 相关资料
 本文Demo: [LifecyclePractice](https://github.com/XunMengWinter/LifecyclePractice)
 
 使用了Lifecycle的一个轻图文App: [Now](https://github.com/XunMengWinter/Now)
