@@ -15,8 +15,9 @@ import android.widget.TextView;
 
 import com.bumptech.glide.Glide;
 
+import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.disposables.Disposable;
-import top.wefor.lifecyclepractice.http.MyApi;
+import top.wefor.lifecyclepractice.http.Network;
 import top.wefor.lifecyclepractice.model.GankMeizhi;
 import top.wefor.lifecyclepractice.rx.OldObserver;
 import top.wefor.lifecyclepractice.rx.SafeObserver;
@@ -49,11 +50,12 @@ public class GankMeizhiActivity extends BaseAppCompatActivity {
         mRecyclerView.setAdapter(mMyAdapter);
         getDataSafe();
 
-        setTitle(getTitle()+" - Meizhi");
+        setTitle(getTitle() + " - Meizhi");
     }
 
     private void getDataSafe() {
-        new MyApi().getGankMeizhi(20)
+        Network.getApiService().getGankMeizhi(20)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new SafeObserver<GankMeizhi>(getLifecycle()) {
                     @Override
                     public void onNext(GankMeizhi gankMeizhi) {
@@ -66,8 +68,9 @@ public class GankMeizhiActivity extends BaseAppCompatActivity {
     }
 
     @Deprecated
-    private void getData(){
-        new MyApi().getGankMeizhi(20)
+    private void getData() {
+        Network.getApiService().getGankMeizhi(20)
+                .observeOn(AndroidSchedulers.mainThread())
                 .subscribe(new OldObserver<GankMeizhi>() {
                     @Override
                     public void onSubscribe(Disposable d) {
@@ -77,7 +80,7 @@ public class GankMeizhiActivity extends BaseAppCompatActivity {
                     @Override
                     public void onNext(GankMeizhi gankMeizhi) {
                         //需判断是否可以安全地执行UI刷新。
-                        if (isFinishing()){
+                        if (isFinishing()) {
                             return;
                         }
                         if (!gankMeizhi.error) {
